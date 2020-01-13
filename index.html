@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,10 +12,16 @@
     <title>Snake</title>
     <div class="container">
       <canvas class="canvas" id="snake" width="608" height="608"></canvas>
-      <button id="button" class="button hide"><span>Restart</span></button>
+      <button id="btnEasy" class="button easy">Easy</button>
+      <button id="btnMedium" class="button medium">Medium</button>
+      <button id="btnHard" class="button god">Hard</button>
+      <button id="button" class="button hide restart">
+        <span>Restart</span>
+      </button>
     </div>
 
     <script src="snake.js"></script>
   </head>
-  <body></body>
+
+  <body id="body"></body>
 </html>

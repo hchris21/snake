@@ -2,6 +2,11 @@
 const canvas = document.getElementById("snake");
 const context = canvas.getContext("2d");
 const button = document.getElementById("button");
+const btnEasy = document.getElementById("btnEasy");
+const btnMedium = document.getElementById("btnMedium");
+const btnHard = document.getElementById("btnHard");
+const html = document.getElementById("html");
+const body = document.getElementById("body");
 
 // isDead?
 let isDead = false;
@@ -160,6 +165,66 @@ const draw = () => {
   context.font = "40px Montserrat";
   context.fillText(`Score: ${score}`, 3 * unit, 1.5 * unit);
 };
+// set interval speed
+let intervalSpeed = 100;
+
+const setEasy = () => {
+  clearInterval(game);
+  intervalSpeed = 150;
+  game = setInterval(draw, intervalSpeed);
+  let gradientImage =
+    "linear-gradient(45deg,rgb(0, 128, 122), rgb(154, 154, 197))";
+  html.style.background = gradientImage;
+};
+const setMedium = () => {
+  intervalSpeed = 100;
+  clearInterval(game);
+  game = setInterval(draw, intervalSpeed);
+
+  let gradientImage = "linear-gradient(45deg,  green, blue)";
+  html.style.background = gradientImage;
+};
+const setHard = () => {
+  clearInterval(game);
+  intervalSpeed = 50;
+  game = setInterval(draw, intervalSpeed);
+
+  let gradientImage = "linear-gradient(45deg, rgb(128, 0, 0), rgb(0, 0, 0))";
+  html.style.background = gradientImage;
+};
+
+// let value='';
+
+// const setSpeed = value => {
+//   console.log(value);
+
+//   if (value == "easy") {
+//     clearInterval(game);
+//     intervalSpeed = 150;
+//     let gradientImage =
+//       "linear-gradient(45deg,rgb(0, 128, 122), rgb(154, 154, 197))";
+//     html.style.background = gradientImage;
+//   }
+
+//   if (value == "medium") {
+//     clearInterval(game);
+//     intervalSpeed = 100;
+//     let gradientImage = "linear-gradient(45deg,  green, blue)";
+//     html.style.background = gradientImage;
+//   }
+
+//   if (value == "hard") {
+//     clearInterval(game);
+//     intervalSpeed = 50;
+//     let gradientImage = "linear-gradient(45deg, rgb(128, 0, 0), rgb(0, 0, 0))";
+//     html.style.background = gradientImage;
+//   }
+//   game = setInterval(draw, intervalSpeed);
+// };
+
+btnEasy.addEventListener("click", setEasy);
+btnMedium.addEventListener("click", setMedium);
+btnHard.addEventListener("click", setHard);
 
 // restarting game
 const restartGame = () => {
@@ -168,18 +233,16 @@ const restartGame = () => {
   score = 0;
   isDead = false;
   checkDead();
-  game = setInterval(draw, 100);
+  game = setInterval(draw, intervalSpeed);
   snake = [];
   snake[0] = {
     x: 9 * unit,
     y: 10 * unit
   };
-
-  // isDead = false;
 };
 
 // Click event listener
 button.addEventListener("click", restartGame);
 
 // refreshing the canvas
-let game = setInterval(draw, 100);
+let game = setInterval(draw, intervalSpeed);

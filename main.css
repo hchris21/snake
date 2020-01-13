@@ -1,9 +1,13 @@
-body,
+/* body, */
 html {
   background-image: linear-gradient(45deg, green, blue);
   background-repeat: no-repeat;
   height: 100%;
   overflow: hidden;
+}
+
+.canvas {
+  border-radius: 15px;
 }
 
 .container {
@@ -14,10 +18,11 @@ html {
 
 .button {
   position: absolute;
-  top: 70vh;
+  top: 530px;
+  left: 0;
   display: inline-block;
   border-radius: 4px;
-  background-color: #2fd81f;
+  background-color: rgb(12, 238, 23, 0.8);
   border: none;
   color: rgb(0, 0, 0);
   text-align: center;
@@ -30,16 +35,30 @@ html {
   animation: fadeIn 2s;
 }
 
+.easy {
+  top: 100px;
+  left: 0;
+}
+
+.medium {
+  top: 190px;
+  left: 0;
+}
+
+.god {
+  top: 280px;
+  left: 0;
+}
+
 .button span {
   cursor: pointer;
   display: inline-block;
-  position: relative;
+  /* position: relative; */
   transition: 0.5s;
 }
 
 .button span:after {
   content: "\00bb";
-  position: absolute;
   opacity: 0;
   top: 0;
   right: -20px;
@@ -60,15 +79,23 @@ html {
 }
 
 .unhide {
-  display: inline-block;
+  right: 0;
 }
 
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 1040px) {
+  .button {
+    opacity: 0.1;
+  }
+  .button:hover {
+    opacity: 0.8;
   }
 }
