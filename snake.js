@@ -156,6 +156,7 @@ const draw = () => {
     clearInterval(game);
     dead.play();
     isDead = true;
+    drc = "";
     checkDead();
   }
 
@@ -169,6 +170,7 @@ const draw = () => {
 let intervalSpeed = 100;
 
 const setEasy = () => {
+  restartGame();
   clearInterval(game);
   intervalSpeed = 150;
   game = setInterval(draw, intervalSpeed);
@@ -177,6 +179,7 @@ const setEasy = () => {
   html.style.background = gradientImage;
 };
 const setMedium = () => {
+  restartGame();
   intervalSpeed = 100;
   clearInterval(game);
   game = setInterval(draw, intervalSpeed);
@@ -185,6 +188,7 @@ const setMedium = () => {
   html.style.background = gradientImage;
 };
 const setHard = () => {
+  restartGame();
   clearInterval(game);
   intervalSpeed = 50;
   game = setInterval(draw, intervalSpeed);
