@@ -8,8 +8,8 @@ const btnHard = document.getElementById("btnHard");
 const html = document.getElementById("html");
 const body = document.getElementById("body");
 
-// isDead?
-let isDead = false;
+// snake is dead bool
+let snakeDead = false;
 
 // game unit
 const unit = 32;
@@ -36,14 +36,14 @@ down.src = "/audio/down.mp3";
 dead.src = "/audio/dead.mp3";
 eat.src = "/audio/eat.mp3";
 
-// snake
+// creating the snake and setting position to center
 let snake = [];
 snake[0] = {
   x: 9 * unit,
   y: 10 * unit
 };
 
-// food
+// creating the food
 let food = {
   x: Math.floor(Math.random() * 17 + 1) * unit,
   y: Math.floor(Math.random() * 15 + 3) * unit
@@ -82,9 +82,9 @@ function collision(head, array) {
   return false;
 }
 
-// hide button
+// check if the snake is dead function to show/hide Restart button
 const checkDead = () => {
-  if (isDead) {
+  if (snakeDead) {
     button.className = "button nohide";
   } else {
     button.className = "button hide";
@@ -95,6 +95,7 @@ const checkDead = () => {
 const draw = () => {
   context.drawImage(floor, 0, 0);
 
+  // Styling the snake: head - green, body - white, border - red
   for (let i = 0; i < snake.length; i++) {
     context.fillStyle = i === 0 ? "green" : "white";
     context.fillRect(snake[i].x, snake[i].y, unit, unit);
@@ -102,14 +103,14 @@ const draw = () => {
     context.strokeStyle = "red";
     context.strokeRect(snake[i].x, snake[i].y, unit, unit);
   }
-
+  // drawing food
   context.drawImage(foodImage, food.x, food.y);
 
-  //   current head position
+  // current head position
   let snakeX = snake[0].x;
   let snakeY = snake[0].y;
 
-  //   direction
+  // moving direction
   if (drc == "LEFT") {
     snakeX -= unit;
   }
@@ -123,7 +124,7 @@ const draw = () => {
     snakeY += unit;
   }
 
-  //snake eats
+  // snake eats -> refresh food position
   if (snakeX == food.x && snakeY == food.y) {
     score++;
     eat.play();
@@ -136,7 +137,7 @@ const draw = () => {
       y: posY
     };
   } else {
-    //remove tail
+    // remove tail
     snake.pop();
   }
 
@@ -145,17 +146,18 @@ const draw = () => {
     x: snakeX,
     y: snakeY
   };
-  // game over
+
+  // game over check
   if (
-    snakeX < unit ||
-    snakeX > 17 * unit ||
-    snakeY < 3 * unit ||
-    snakeY > 17 * unit ||
+    snakeX < unit || // hits left wall
+    snakeX > 17 * unit || // hits right wall
+    snakeY < 3 * unit || // hits top wall
+    snakeY > 17 * unit || // hits bottom wall
     collision(newHead, snake)
   ) {
     clearInterval(game);
     dead.play();
-    isDead = true;
+    snakeDead = true;
     drc = "";
     checkDead();
   }
@@ -169,66 +171,37 @@ const draw = () => {
 // set interval speed
 let intervalSpeed = 100;
 
-const setEasy = () => {
-  restartGame();
-  clearInterval(game);
-  intervalSpeed = 150;
-  game = setInterval(draw, intervalSpeed);
-  let gradientImage =
-    "linear-gradient(45deg,rgb(0, 128, 122), rgb(154, 154, 197))";
-  html.style.background = gradientImage;
-};
-const setMedium = () => {
-  restartGame();
-  intervalSpeed = 100;
-  clearInterval(game);
-  game = setInterval(draw, intervalSpeed);
+// refreshing the canvas
+let game = setInterval(draw, intervalSpeed);
 
+const setSpeed = value => {
+  drc = "";
   let gradientImage = "linear-gradient(45deg,  green, blue)";
-  html.style.background = gradientImage;
-};
-const setHard = () => {
+
+  if (value === "easy") {
+    intervalSpeed = 150;
+    gradientImage =
+      "linear-gradient(45deg,rgb(0, 128, 122), rgb(154, 154, 197))";
+    html.style.background = gradientImage;
+  }
+
+  if (value === "medium") {
+    intervalSpeed = 100;
+    gradientImage = "linear-gradient(45deg,  green, blue)";
+    html.style.background = gradientImage;
+  }
+
+  if (value === "hard") {
+    intervalSpeed = 50;
+    gradientImage = "linear-gradient(45deg, rgb(128, 0, 0), rgb(0, 0, 0))";
+    html.style.background = gradientImage;
+  }
   restartGame();
-  clearInterval(game);
-  intervalSpeed = 50;
-  game = setInterval(draw, intervalSpeed);
-
-  let gradientImage = "linear-gradient(45deg, rgb(128, 0, 0), rgb(0, 0, 0))";
-  html.style.background = gradientImage;
 };
 
-// let value='';
-
-// const setSpeed = value => {
-//   console.log(value);
-
-//   if (value == "easy") {
-//     clearInterval(game);
-//     intervalSpeed = 150;
-//     let gradientImage =
-//       "linear-gradient(45deg,rgb(0, 128, 122), rgb(154, 154, 197))";
-//     html.style.background = gradientImage;
-//   }
-
-//   if (value == "medium") {
-//     clearInterval(game);
-//     intervalSpeed = 100;
-//     let gradientImage = "linear-gradient(45deg,  green, blue)";
-//     html.style.background = gradientImage;
-//   }
-
-//   if (value == "hard") {
-//     clearInterval(game);
-//     intervalSpeed = 50;
-//     let gradientImage = "linear-gradient(45deg, rgb(128, 0, 0), rgb(0, 0, 0))";
-//     html.style.background = gradientImage;
-//   }
-//   game = setInterval(draw, intervalSpeed);
-// };
-
-btnEasy.addEventListener("click", setEasy);
-btnMedium.addEventListener("click", setMedium);
-btnHard.addEventListener("click", setHard);
+btnEasy.addEventListener("click", () => setSpeed("easy"));
+btnMedium.addEventListener("click", () => setSpeed("medium"));
+btnHard.addEventListener("click", () => setSpeed("hard"));
 
 // restarting game
 const restartGame = () => {
@@ -247,6 +220,3 @@ const restartGame = () => {
 
 // Click event listener
 button.addEventListener("click", restartGame);
-
-// refreshing the canvas
-let game = setInterval(draw, intervalSpeed);
