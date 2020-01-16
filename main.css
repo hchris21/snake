@@ -21,7 +21,7 @@ html {
   left: 0;
   display: inline-block;
   border-radius: 4px;
-  background-color: rgb(12, 238, 23, 0.8);
+  background-color: rgb(12, 238, 23, 0.6);
   border: none;
   color: rgb(0, 0, 0);
   text-align: center;
@@ -37,16 +37,19 @@ html {
 .easy {
   top: 100px;
   left: 0;
+  background-color: rgb(0, 128, 122, 0.7);
 }
 
 .medium {
   top: 190px;
   left: 0;
+  background-color: rgb(95, 0, 248, 0.7);
 }
 
-.god {
+.hard {
   top: 280px;
   left: 0;
+  background-color: rgb(255, 0, 0, 0.7);
 }
 
 .button span {
@@ -77,7 +80,7 @@ html {
 }
 
 .unhide {
-  right: 0;
+  /* right: 0; */
 }
 
 @keyframes fadeIn {

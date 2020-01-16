@@ -86,8 +86,14 @@ function collision(head, array) {
 const checkDead = () => {
   if (snakeDead) {
     button.className = "button nohide";
+    btnEasy.className = "button nohide easy";
+    btnMedium.className = "button nohide medium";
+    btnHard.className = "button nohide hard";
   } else {
     button.className = "button hide";
+    btnEasy.className = "button hide ";
+    btnMedium.className = "button hide ";
+    btnHard.className = "button hide ";
   }
 };
 
@@ -208,7 +214,7 @@ const restartGame = () => {
   clearInterval(game);
   drc = "";
   score = 0;
-  isDead = false;
+  snakeDead = false;
   checkDead();
   game = setInterval(draw, intervalSpeed);
   snake = [];
